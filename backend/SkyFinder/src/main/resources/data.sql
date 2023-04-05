@@ -1,0 +1,1 @@
+insert into users_data values('test','test@gmail.com','test','pass','USER');
