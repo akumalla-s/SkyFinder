@@ -27,6 +27,9 @@ public class FlightInformationService {
 
 	@Autowired
 	private RestTemplate restTemplate;
+	
+	@Autowired
+	private FlightComparator flightComparator;
 
 	public List<FlightInformation> displaySkywaveFlights() throws JsonMappingException, JsonProcessingException {
 		String url = "http://localhost:8081/displayAllFlights";
@@ -63,7 +66,9 @@ public class FlightInformationService {
 		// extract response body
 		List<FlightInformation> flightList = response.getBody();
 		
-		return flightList;
+		List<FlightInformation> aggregateData = flightComparator.aggregateBasedOnOverallScore(flightList);
+		 
+		return aggregateData;
 		
 
 	}
