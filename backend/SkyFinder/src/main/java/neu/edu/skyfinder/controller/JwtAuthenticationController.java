@@ -1,7 +1,5 @@
 package neu.edu.skyfinder.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import neu.edu.skyfinder.configuration.JwtTokenUtil;
 import neu.edu.skyfinder.controller.model.JwtRequest;
 import neu.edu.skyfinder.controller.model.JwtResponse;
-import neu.edu.skyfinder.entity.FlightInformation;
 import neu.edu.skyfinder.entity.User;
 import neu.edu.skyfinder.service.UserService;
 

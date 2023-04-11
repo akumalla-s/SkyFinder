@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import neu.edu.skyfinder.service.UserService;
 
 @SpringBootApplication
+@EnableWebMvc
 public class SkyFinderApplication implements CommandLineRunner{
 	
 	@Autowired

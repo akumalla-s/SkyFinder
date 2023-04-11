@@ -55,6 +55,7 @@ public class SecurityConfiguration {
 		http.csrf().disable();
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.authorizeRequests().antMatchers("/").permitAll();
+		//http.authorizeRequests().antMatchers("/**").permitAll();
 		http.authorizeRequests().antMatchers("/auth").permitAll();
 		http.authorizeRequests().antMatchers("/createUser").permitAll();
 		http.authorizeRequests().antMatchers("/h2-admin/**").permitAll();
