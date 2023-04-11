@@ -19,6 +19,8 @@ import neu.edu.skyfinder.service.UserService;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
+	
+	
 
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
@@ -30,13 +32,19 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		final String requestTokenHeader = request.getHeader("Authorization");
+		
+		System.out.println("****Request Token Header *** "+ requestTokenHeader);
 
 		String username = null;
 		String jwtToken = null;
 
 		if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
 			jwtToken = requestTokenHeader.substring(7);
+			//log.debug("Found JWT token: {}", jwtToken);
+			System.out.println("The token is "+jwtToken);
 		} else {
+			
+			System.out.println("The token is "+requestTokenHeader);
 			System.out.println("JWT Token does not start with Bearer");
 		}
 

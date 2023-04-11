@@ -19,7 +19,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import neu.edu.skyfinder.controller.SearchFieldsModel;
+import neu.edu.skyfinder.controller.model.SearchFieldsModel;
 import neu.edu.skyfinder.entity.FlightInformation;
 
 @Service

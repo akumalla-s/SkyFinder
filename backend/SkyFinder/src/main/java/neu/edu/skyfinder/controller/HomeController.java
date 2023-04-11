@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import neu.edu.skyfinder.controller.model.SearchFieldsModel;
 import neu.edu.skyfinder.entity.FlightInformation;
 import neu.edu.skyfinder.service.FlightInformationService;
 

@@ -1,4 +1,4 @@
-package neu.edu.skyfinder.controller;
+package neu.edu.skyfinder.controller.model;
 
 public class UserModel {
 

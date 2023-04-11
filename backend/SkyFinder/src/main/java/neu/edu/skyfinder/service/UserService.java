@@ -6,12 +6,14 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import neu.edu.skyfinder.controller.UserModel;
+import neu.edu.skyfinder.controller.model.UpdateUserModel;
+import neu.edu.skyfinder.controller.model.UserModel;
 import neu.edu.skyfinder.entity.User;
 import neu.edu.skyfinder.repository.UserRepository;
 
@@ -44,21 +46,34 @@ public class UserService implements UserDetailsService {
 		}
 	}
 
-	public User updateUser(UserModel userModel) {
-		Optional<User> user = userRepository.findById(userModel.getUsername());
+	public User updateUser(UpdateUserModel userModel, String oldusername) {
+		
+		String old = oldusername;
+		String newUsername = userModel.getUsername();
+		Optional<User> user = userRepository.findById(oldusername);
 		System.out.println(user);
 		if (user.isPresent()) {
 			User _user = user.get();
 			System.out.println(_user);
 
-			_user.setName(userModel.getName());
-			_user.setEmail(userModel.getEmail());
-			_user.setPassword(new BCryptPasswordEncoder().encode(userModel.getPassword()));
-			_user.setRole("USER");
+			// Create a new user object with the updated properties
+			User updatedUser = new User();
+			updatedUser.setUsername(userModel.getUsername());
+			updatedUser.setName(userModel.getName());
+			updatedUser.setEmail(userModel.getEmail());
+			updatedUser.setRole("USER");
+			updatedUser.setPassword(_user.getPassword());
 
-			_user = userRepository.save(_user);
+			// Save the updated user object
+			updatedUser = userRepository.save(updatedUser);
+			
+			if(old.equals(newUsername)){
+				System.out.println("Not deleting username");
+			}else { 
+				deleteUser(oldusername);
+			}
 
-			return _user;
+			return updatedUser;
 		}
 		System.out.println("Item is null");
 		return null;
@@ -68,20 +83,6 @@ public class UserService implements UserDetailsService {
 	public User getUserDetails(String username) {
 		Optional<User> user = userRepository.findById(username);
 		return user.get();
-	}
-
-	@Override
-	public org.springframework.security.core.userdetails.UserDetails loadUserByUsername(String username)
-			throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
-		User user = userRepository.findById(username)
-				.orElseThrow(() -> new RuntimeException("User not found: " + username));
-
-		GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole());
-		System.out.println(user.getRole());
-		System.out.println("ROle is being set");
-		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
-				Arrays.asList(authority));
 	}
 
 	public User register(String name, String email, String username, String password) {
@@ -94,6 +95,18 @@ public class UserService implements UserDetailsService {
 		user = userRepository.saveAndFlush(user);
 		return user;
 
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		User user = userRepository.findById(username)
+				.orElseThrow(() -> new RuntimeException("User not found: " + username));
+		GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole());
+		System.out.println("In UserService Class " + user.getUsername());
+		System.out.println("In UserService Class " + user.getRole());
+		System.out.println("In UserService Class " + " ROle is being set");
+		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
+				Arrays.asList(authority));
 	}
 
 }

@@ -1,5 +1,7 @@
 package neu.edu.skyfinder.configuration;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
 
 import neu.edu.skyfinder.service.UserService;
 
@@ -47,37 +50,43 @@ public class SecurityConfiguration {
 		return authConfig.getAuthenticationManager();
 	}
 	
+	
+	
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
 		http.exceptionHandling().authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
-		http.cors().disable();
+		
+		http.cors().configurationSource(request -> {
+		    CorsConfiguration cors = new CorsConfiguration();
+		    cors.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+		    cors.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+		    cors.setAllowCredentials(true);
+		    cors.setAllowedHeaders(Arrays.asList("Content-Type", "Authorization"));
+		    return cors;
+		});
+
+		
+		//http.cors().disable();
 		http.csrf().disable();
+		
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-		http.authorizeRequests().antMatchers("/").permitAll();
+		
 		//http.authorizeRequests().antMatchers("/**").permitAll();
+		
+		http.authorizeRequests().antMatchers("/").permitAll();
+		http.authorizeRequests().antMatchers("/user/testApp").permitAll();
 		http.authorizeRequests().antMatchers("/auth").permitAll();
-		http.authorizeRequests().antMatchers("/createUser").permitAll();
+		http.authorizeRequests().antMatchers("/user/createUser").permitAll();
 		http.authorizeRequests().antMatchers("/h2-admin/**").permitAll();
 		http.authorizeRequests().antMatchers("/displayFlightsBasedOnInput").permitAll();
-
-
-		//http.authorizeRequests().antMatchers(HttpMethod.GET, "/ADMIN/**").hasAuthority("ADMIN");
-		//http.authorizeRequests().antMatchers(HttpMethod.GET, "/user/USER").hasAuthority("USER");
-
-		//http.authorizeRequests().antMatchers(HttpMethod.GET, "/user/view/user").hasAuthority("ADMIN");
-		// http.authorizeRequests().antMatchers(HttpMethod.GET,"/user/view/**").permitAll();
-		// http.authorizeRequests().antMatchers("/**").denyAll();
+		
+		http.authenticationProvider(authenticationProvider());
 		http.authorizeRequests().anyRequest().authenticated();
 		
-		
-		// http.formLogin(Customizer.withDefaults());
 		http.formLogin().disable();
-		http.headers().frameOptions().sameOrigin();
+		http.headers().frameOptions().sameOrigin();		
 
-		http.authenticationProvider(authenticationProvider());
-		
-		//http.httpBasic();
 		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
 		return http.build();

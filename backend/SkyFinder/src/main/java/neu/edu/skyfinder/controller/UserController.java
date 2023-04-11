@@ -13,17 +13,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import neu.edu.skyfinder.controller.model.UpdateUserModel;
+import neu.edu.skyfinder.controller.model.UserModel;
 import neu.edu.skyfinder.entity.User;
 import neu.edu.skyfinder.service.UserService;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:3000"})
+@CrossOrigin("http://localhost:3000")
+@RequestMapping("/user")
 public class UserController {
 	
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping("/")
+	@GetMapping("/testApp")
 	public String testApp() {
 		return "Hello from SkyFinder!!";
 	}
@@ -40,14 +43,17 @@ public class UserController {
 		return new ResponseEntity<>(isDeleted, HttpStatus.OK);
 	}
 	
-	@PutMapping("/updateUser")
-	public ResponseEntity<User> updateUser(@RequestBody UserModel userModel){
-		User user = userService.updateUser(userModel);
+	@PutMapping("/updateUser/{oldusername}")
+	public ResponseEntity<User> updateUser(@RequestBody UpdateUserModel userModel, @PathVariable String oldusername){
+		User user = userService.updateUser(userModel, oldusername);
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 	
+	
+	
 	@GetMapping("{username}")
 	public ResponseEntity<User> getUserDetails(@PathVariable String username){
+		System.out.println("********* Username ********** " + username);
 		User user = userService.getUserDetails(username);
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
