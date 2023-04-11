@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import neu.edu.skyfinder.controller.model.UpdateUserModel;
+import neu.edu.skyfinder.controller.model.UpdateUserPasswordModel;
 import neu.edu.skyfinder.controller.model.UserModel;
 import neu.edu.skyfinder.entity.User;
 import neu.edu.skyfinder.repository.UserRepository;
@@ -46,8 +47,20 @@ public class UserService implements UserDetailsService {
 		}
 	}
 
+	public User updateUserPassword(UpdateUserPasswordModel userModel, String username) {
+		Optional<User> user = userRepository.findById(username);
+		if(user.isPresent()) {
+			User _user = user.get();
+			_user.setPassword(new BCryptPasswordEncoder().encode(userModel.getPassword()));
+			_user = userRepository.save(_user);
+			return _user;
+		}
+		System.out.println("User Service updatePassword Item is null");
+		return null;
+	}
+
 	public User updateUser(UpdateUserModel userModel, String oldusername) {
-		
+
 		String old = oldusername;
 		String newUsername = userModel.getUsername();
 		Optional<User> user = userRepository.findById(oldusername);
@@ -66,10 +79,10 @@ public class UserService implements UserDetailsService {
 
 			// Save the updated user object
 			updatedUser = userRepository.save(updatedUser);
-			
-			if(old.equals(newUsername)){
+
+			if (old.equals(newUsername)) {
 				System.out.println("Not deleting username");
-			}else { 
+			} else {
 				deleteUser(oldusername);
 			}
 

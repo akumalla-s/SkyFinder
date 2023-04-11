@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import neu.edu.skyfinder.controller.model.UpdateUserModel;
+import neu.edu.skyfinder.controller.model.UpdateUserPasswordModel;
 import neu.edu.skyfinder.controller.model.UserModel;
 import neu.edu.skyfinder.entity.User;
 import neu.edu.skyfinder.service.UserService;
@@ -46,6 +47,12 @@ public class UserController {
 	@PutMapping("/updateUser/{oldusername}")
 	public ResponseEntity<User> updateUser(@RequestBody UpdateUserModel userModel, @PathVariable String oldusername){
 		User user = userService.updateUser(userModel, oldusername);
+		return new ResponseEntity<>(user, HttpStatus.OK);
+	}
+	
+	@PutMapping("/updateUserPassword/{username}")
+	public ResponseEntity<User> updateUserPassword(@RequestBody UpdateUserPasswordModel userModel, @PathVariable String username){
+		User user = userService.updateUserPassword(userModel, username);
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 	
