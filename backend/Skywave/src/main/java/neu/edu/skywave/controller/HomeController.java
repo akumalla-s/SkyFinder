@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,5 +35,12 @@ public class HomeController {
     public ResponseEntity<List<FlightInformation>> displayBasedOnSearch(@RequestBody SearchFieldsModel searchFieldsModel) throws ParseException {
     	List<FlightInformation> flightInformation = service.displayBasedOnSearch(searchFieldsModel);
     	return new ResponseEntity<List<FlightInformation>>(flightInformation, HttpStatus.OK); 
+    }
+    
+    @GetMapping("/bookFlight/{flightnumber}")
+    public FlightInformation displayFlightInformation(@PathVariable String flightnumber){
+    	FlightInformation flightInformation = service.displayFlight(flightnumber);
+		return flightInformation;
+    	
     }
 }

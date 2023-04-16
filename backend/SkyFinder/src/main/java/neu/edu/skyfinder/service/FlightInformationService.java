@@ -3,6 +3,8 @@ package neu.edu.skyfinder.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -19,17 +21,23 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import neu.edu.skyfinder.controller.model.FlightBookingModel;
 import neu.edu.skyfinder.controller.model.SearchFieldsModel;
+import neu.edu.skyfinder.entity.FlightBooking;
 import neu.edu.skyfinder.entity.FlightInformation;
+import neu.edu.skyfinder.repository.FlightBookingRepository;
 
 @Service
 public class FlightInformationService {
 
 	@Autowired
 	private RestTemplate restTemplate;
-	
+
 	@Autowired
 	private FlightComparator flightComparator;
+	
+	@Autowired
+	private FlightBookingRepository bookingRepository;
 
 	public List<FlightInformation> displaySkywaveFlights() throws JsonMappingException, JsonProcessingException {
 		String url = "http://localhost:8081/displayAllFlights";
@@ -48,8 +56,10 @@ public class FlightInformationService {
 		return flightList;
 	}
 
-	public List<FlightInformation> displayFlightsBasedOnInput(SearchFieldsModel model) throws JsonMappingException, JsonProcessingException {
-		String url = "http://localhost:8081/displayBasedOnSearch";
+	public List<FlightInformation> displayFlightsBasedOnInput(SearchFieldsModel model)
+			throws JsonMappingException, JsonProcessingException {
+		String url1 = "http://localhost:8081/displayBasedOnSearch";
+		String url2 = "http://localhost:8083/displayBasedOnSearch";
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -59,18 +69,81 @@ public class FlightInformationService {
 		requestBody.put("date", model.getDate());
 
 		HttpEntity<Map<String, String>> request = new HttpEntity<>(requestBody, headers);
-		
-		// send request and retrieve response
-		ResponseEntity<List<FlightInformation>> response = restTemplate.exchange(url, HttpMethod.POST, request, new ParameterizedTypeReference<List<FlightInformation>>() {});
 
-		// extract response body
-		List<FlightInformation> flightList = response.getBody();
-		
-		List<FlightInformation> aggregateData = flightComparator.aggregateBasedOnOverallScore(flightList);
-		 
-		return aggregateData;
-		
+		try {
+			// send request and retrieve response
+			ResponseEntity<List<FlightInformation>> response1 = restTemplate.exchange(url1, HttpMethod.POST, request,
+					new ParameterizedTypeReference<List<FlightInformation>>() {
+					});
+			ResponseEntity<List<FlightInformation>> response2 = restTemplate.exchange(url2, HttpMethod.POST, request,
+					new ParameterizedTypeReference<List<FlightInformation>>() {
+					});
+			// extract response body
+			List<FlightInformation> flightList1 = response1.getBody();
+			List<FlightInformation> flightList2 = response2.getBody();
 
+			List<FlightInformation> flightList = combineMyLists(flightList1, flightList2);
+
+			List<FlightInformation> aggregateData = flightComparator.aggregateBasedOnOverallScore(flightList);
+
+			return aggregateData;
+
+		} catch (Exception e) {
+			System.out.println("Error in Flight Information Service");
+			return null;
+		}
+
+	}
+
+	@SafeVarargs
+	private List<FlightInformation> combineMyLists(List<FlightInformation>... args) {
+		List<FlightInformation> combinedList = Stream.of(args).flatMap(i -> i.stream()).collect(Collectors.toList());
+		;
+		return combinedList;
+	}
+
+	public FlightInformation bookFlight(FlightBookingModel flightBookingModel) {
+		String url = null;
+		if(flightBookingModel.getFlightNumber().contains("SW")) {
+			url = "http://localhost:8081/bookFlight/" + flightBookingModel.getFlightNumber();
+		}else if(flightBookingModel.getFlightNumber().contains("HA")){
+			url = "http://localhost:8083/bookFlight/" + flightBookingModel.getFlightNumber();
+		}
+		
+		FlightBooking flightBooking = new FlightBooking();
+		FlightInformation flightInformation = restTemplate.getForObject(url, FlightInformation.class);
+		if(flightInformation.getFlightNumber().equals(flightBookingModel.getFlightNumber())) {
+			flightBooking.setUsername(flightBookingModel.getUsername());
+			flightBooking.setFlightNumber(flightInformation.getFlightNumber());
+			flightBooking.setOrigin(flightInformation.getOrigin());
+			flightBooking.setDestination(flightInformation.getDestination());
+			flightBooking.setDepartureTime(flightInformation.getDepartureTime());
+			flightBooking.setArrivalTime(flightInformation.getArrivalTime());
+			flightBooking.setDuration(flightInformation.getDuration());
+			flightBooking.setPrice(flightInformation.getPrice());
+			flightBooking.setAirline(flightInformation.getAirline());
+			flightBooking.setStatus(flightInformation.getStatus());
+			bookingRepository.saveAndFlush(flightBooking);
+		}
+		return flightInformation;
+
+	}
+
+	public List<FlightBooking> displayUserBookings(String username) {
+		List<FlightBooking> flightBooking = bookingRepository.findByUsername(username);
+		return flightBooking;
+	}
+
+	public boolean cancelFlightBooking(int bookingid) {
+		boolean isDeleted = false;
+		try {
+			bookingRepository.deleteById(bookingid);
+			isDeleted = true;
+		} catch (Exception e) {
+			return false;
+		}
+		return isDeleted;
+			
 	}
 
 }

@@ -1,4 +1,4 @@
-package neu.edu.skywave.service;
+package neu.edu.horizonair.service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,9 +9,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import neu.edu.skywave.controller.SearchFieldsModel;
-import neu.edu.skywave.entity.FlightInformation;
-import neu.edu.skywave.repository.FlightInformationRepository;
+import neu.edu.horizonair.controller.SearchFieldsModel;
+import neu.edu.horizonair.entity.FlightInformation;
+import neu.edu.horizonair.repository.FlightInformationRepository;
 
 @Service
 public class FlightInformationService {
@@ -32,7 +32,7 @@ public class FlightInformationService {
         
 		return flightList;
 	}
-
+	
 	public FlightInformation displayFlight(String flightnumber) {
 		Optional<FlightInformation> flightInformation = repository.findById(flightnumber);
 		if(flightInformation.isPresent()) {
