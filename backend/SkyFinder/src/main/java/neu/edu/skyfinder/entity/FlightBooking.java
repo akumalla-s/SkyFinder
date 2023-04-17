@@ -9,9 +9,9 @@ import javax.persistence.Id;
 public class FlightBooking {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	
+
 	private String username;
 	private String flightNumber;
 	private String origin;
@@ -88,7 +88,6 @@ public class FlightBooking {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-	
 
+	
 }

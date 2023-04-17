@@ -5,17 +5,17 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="users_data")
+@Table(name = "users_data")
 public class User {
 
 	@Id
 	private String username;
-	
-	private String name;	
+
+	private String name;
 	private String email;
 	private String password;
 	private String role;
-	
+
 	public User() {
 		// TODO Auto-generated constructor stub
 	}

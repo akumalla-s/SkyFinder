@@ -1,6 +1,7 @@
 package neu.edu.skyfinder.service;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,9 @@ import org.springframework.stereotype.Service;
 
 import neu.edu.skyfinder.controller.model.UpdateUserModel;
 import neu.edu.skyfinder.controller.model.UpdateUserPasswordModel;
-import neu.edu.skyfinder.controller.model.UserModel;
+import neu.edu.skyfinder.entity.FlightBooking;
 import neu.edu.skyfinder.entity.User;
+import neu.edu.skyfinder.repository.FlightBookingRepository;
 import neu.edu.skyfinder.repository.UserRepository;
 
 @Service
@@ -23,6 +25,9 @@ public class UserService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private FlightBookingRepository bookingRepository;
 
 	public User createUser(String name, String email, String username, String password) {
 		User user = new User();
@@ -84,6 +89,13 @@ public class UserService implements UserDetailsService {
 				System.out.println("Not deleting username");
 			} else {
 				deleteUser(oldusername);
+			}
+			
+			List<FlightBooking> flightBookings = bookingRepository.findByUsername(oldusername);
+			for(int i=0; i<flightBookings.size();i++) {
+				FlightBooking flightBooking = flightBookings.get(i);
+				flightBooking.setUsername(newUsername);
+				bookingRepository.save(flightBooking);
 			}
 
 			return updatedUser;
