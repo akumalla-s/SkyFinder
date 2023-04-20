@@ -41,7 +41,6 @@ public class HomeController {
 	@GetMapping("/bookFlight/{flightnumber}")
     public FlightInformation displayFlightInformation(@PathVariable String flightnumber){
     	FlightInformation flightInformation = service.displayFlight(flightnumber);
-		return flightInformation;
-    	
+		return flightInformation;    	
     }
 }

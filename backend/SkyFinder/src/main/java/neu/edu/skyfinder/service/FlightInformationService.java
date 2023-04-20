@@ -35,7 +35,7 @@ public class FlightInformationService {
 
 	@Autowired
 	private FlightComparator flightComparator;
-	
+
 	@Autowired
 	private FlightBookingRepository bookingRepository;
 
@@ -59,7 +59,8 @@ public class FlightInformationService {
 	public List<FlightInformation> displayFlightsBasedOnInput(SearchFieldsModel model)
 			throws JsonMappingException, JsonProcessingException {
 		String url1 = "http://localhost:8081/displayBasedOnSearch";
-		String url2 = "http://localhost:8083/displayBasedOnSearch";
+		String url2 = "http://localhost:8082/displayBasedOnSearch";
+		String url3 = "http://localhost:8083/displayBasedOnSearch";
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -78,11 +79,15 @@ public class FlightInformationService {
 			ResponseEntity<List<FlightInformation>> response2 = restTemplate.exchange(url2, HttpMethod.POST, request,
 					new ParameterizedTypeReference<List<FlightInformation>>() {
 					});
+			ResponseEntity<List<FlightInformation>> response3 = restTemplate.exchange(url3, HttpMethod.POST, request,
+					new ParameterizedTypeReference<List<FlightInformation>>() {
+					});
 			// extract response body
 			List<FlightInformation> flightList1 = response1.getBody();
 			List<FlightInformation> flightList2 = response2.getBody();
+			List<FlightInformation> flightList3 = response3.getBody();
 
-			List<FlightInformation> flightList = combineMyLists(flightList1, flightList2);
+			List<FlightInformation> flightList = combineMyLists(flightList1, flightList2, flightList3);
 
 			List<FlightInformation> aggregateData = flightComparator.aggregateBasedOnOverallScore(flightList);
 
@@ -104,15 +109,17 @@ public class FlightInformationService {
 
 	public FlightInformation bookFlight(FlightBookingModel flightBookingModel) {
 		String url = null;
-		if(flightBookingModel.getFlightNumber().contains("SW")) {
+		if (flightBookingModel.getFlightNumber().contains("SW")) {
 			url = "http://localhost:8081/bookFlight/" + flightBookingModel.getFlightNumber();
-		}else if(flightBookingModel.getFlightNumber().contains("HA")){
+		} else if (flightBookingModel.getFlightNumber().contains("JS")) {
+			url = "http://localhost:8082/bookFlight/" + flightBookingModel.getFlightNumber();
+		} else if (flightBookingModel.getFlightNumber().contains("HA")) {
 			url = "http://localhost:8083/bookFlight/" + flightBookingModel.getFlightNumber();
 		}
-		
+
 		FlightBooking flightBooking = new FlightBooking();
 		FlightInformation flightInformation = restTemplate.getForObject(url, FlightInformation.class);
-		if(flightInformation.getFlightNumber().equals(flightBookingModel.getFlightNumber())) {
+		if (flightInformation.getFlightNumber().equals(flightBookingModel.getFlightNumber())) {
 			flightBooking.setUsername(flightBookingModel.getUsername());
 			flightBooking.setFlightNumber(flightInformation.getFlightNumber());
 			flightBooking.setOrigin(flightInformation.getOrigin());
@@ -143,7 +150,7 @@ public class FlightInformationService {
 			return false;
 		}
 		return isDeleted;
-			
+
 	}
 
 }

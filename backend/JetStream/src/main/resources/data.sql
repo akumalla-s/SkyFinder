@@ -1,50 +1,45 @@
 INSERT INTO flight_information (flight_number, start_date, origin, destination, departure_time, arrival_time, duration, price, capacity, available_seats, airline, status, user_ratings)
-VALUES ('HA222', '2023-04-30', 'Toronto', 'Massachusetts', '2023-04-30 16:00:00', '2023-04-30 18:30:00', '2.5', '320.0', '200', '200', 'HorizonAir', 'scheduled', '3.9');
+VALUES ('JS321', '2023-04-30', 'Toronto', 'Massachusetts', '2023-04-30 14:00:00', '2023-04-30 16:30:00', '2.5', '275.0', '200', '200', 'JetStream', 'scheduled', '4.2');
 
 INSERT INTO flight_information (flight_number, start_date, origin, destination, departure_time, arrival_time, duration, price, capacity, available_seats, airline, status, user_ratings)
-VALUES ('HA223', '2023-04-30', 'Toronto', 'Massachusetts', '2023-04-30 08:00:00', '2023-04-30 10:00:00', '2', '450.0', '200', '200', 'HorizonAir', 'scheduled', '4.1');
+VALUES ('JS322', '2023-04-30', 'Toronto', 'Massachusetts', '2023-04-30 05:00:00', '2023-04-30 07:00:00', '2', '329.0', '200', '200', 'JetStream', 'scheduled', '4.4');
 
 INSERT INTO flight_information (flight_number, start_date, origin, destination, departure_time, arrival_time, duration, price, capacity, available_seats, airline, status, user_ratings)
-VALUES ('HA224', '2023-04-30', 'Toronto', 'New York', '2023-04-30 11:14:00', '2023-04-30 12:44:00', '1.5', '183.0', '200', '200', 'HorizonAir', 'scheduled', '4.7');
+VALUES ('JS324', '2023-04-30', 'Toronto', 'New York', '2023-04-30 09:34:00', '2023-04-30 12:04:00', '2.5', '99.0', '200', '200', 'JetStream', 'scheduled', '4.2');
 
 INSERT INTO flight_information (flight_number, start_date, origin, destination, departure_time, arrival_time, duration, price, capacity, available_seats, airline, status, user_ratings)
-VALUES ('HA225', '2023-04-30', 'Toronto', 'New York', '2023-04-30 14:34:00', '2023-04-30 17:04:00', '2.5', '129.0', '200', '200', 'HorizonAir', 'scheduled', '4.2');
-
-
-INSERT INTO flight_information (flight_number, start_date, origin, destination, departure_time, arrival_time, duration, price, capacity, available_seats, airline, status, user_ratings)
-VALUES ('HA226', '2023-04-30', 'Massachusetts', 'Toronto', '2023-04-30 13:00:00', '2023-04-30 15:00:00', '2', '225.0', '200', '200', 'HorizonAir', 'scheduled', '4.0');
+VALUES ('JS325', '2023-04-30', 'Massachusetts', 'Toronto', '2023-04-30 07:00:00', '2023-04-30 09:00:00', '2', '200.0', '200', '200', 'JetStream', 'scheduled', '4.5');
 
 INSERT INTO flight_information (flight_number, start_date, origin, destination, departure_time, arrival_time, duration, price, capacity, available_seats, airline, status, user_ratings)
-VALUES ('HA227', '2023-04-30', 'New York', 'Toronto', '2023-04-30 08:00:00', '2023-04-30 09:30:00', '1.5', '175.0', '200', '200', 'HorizonAir', 'scheduled', '3.8');
+VALUES ('JS326', '2023-04-30', 'New York', 'Toronto', '2023-04-30 12:00:00', '2023-04-30 14:00:00', '2', '165.0', '200', '200', 'JetStream', 'scheduled', '4.1');
 
 INSERT INTO flight_information (flight_number, start_date, origin, destination, departure_time, arrival_time, duration, price, capacity, available_seats, airline, status, user_ratings)
-VALUES ('HA228', '2023-04-30', 'California', 'Toronto', '2023-04-30 12:00:00', '2023-04-30 16:30:00', '4.5', '550.0', '200', '200', 'HorizonAir', 'scheduled', '4.5');
+VALUES ('JS327', '2023-04-30', 'California', 'Toronto', '2023-04-30 10:00:00', '2023-04-30 14:00:00', '4', '350.0', '200', '200', 'JetStream', 'scheduled', '4.3');
 
 INSERT INTO flight_information (flight_number, start_date, origin, destination, departure_time, arrival_time, duration, price, capacity, available_seats, airline, status, user_ratings)
-VALUES ('HA229', '2023-04-30', 'Texas', 'Toronto', '2023-04-30 11:00:00', '2023-04-30 13:30:00', '2.5', '375.0', '200', '200', 'HorizonAir', 'scheduled', '4.3');
+VALUES ('JS328', '2023-04-30', 'Texas', 'Toronto', '2023-04-30 15:00:00', '2023-04-30 17:00:00', '2', '230.0', '200', '200', 'JetStream', 'scheduled', '4.0');
 
 INSERT INTO flight_information (flight_number, start_date, origin, destination, departure_time, arrival_time, duration, price, capacity, available_seats, airline, status, user_ratings)
-VALUES ('HA230', '2023-04-30', 'Florida', 'Toronto', '2023-04-30 14:00:00', '2023-04-30 18:30:00', '4.5', '480.0', '200', '200', 'HorizonAir', 'scheduled', '4.2');
+VALUES ('JS329', '2023-04-30', 'Florida', 'Toronto', '2023-04-30 08:00:00', '2023-04-30 12:00:00', '4', '280.0', '200', '200', 'JetStream', 'scheduled', '4.2');
 
 INSERT INTO flight_information (flight_number, start_date, origin, destination, departure_time, arrival_time, duration, price, capacity, available_seats, airline, status, user_ratings)
-VALUES ('HA231', '2023-04-30', 'Illinois', 'Toronto', '2023-04-30 10:00:00', '2023-04-30 13:30:00', '3.5', '315.0', '200', '200', 'HorizonAir', 'scheduled', '4.1');
+VALUES ('JS330', '2023-04-30', 'Illinois', 'Toronto', '2023-04-30 11:00:00', '2023-04-30 15:00:00', '4', '190.0', '200', '200', 'JetStream', 'scheduled', '3.9');
 
--- Toronto to Massachusetts
 INSERT INTO flight_information (flight_number, start_date, origin, destination, departure_time, arrival_time, duration, price, capacity, available_seats, airline, status, user_ratings)
-VALUES ('HA232', '2023-04-30', 'Toronto', 'Massachusetts', '2023-04-30 13:00:00', '2023-04-30 15:30:00', '2.5', '280.0', '200', '200', 'HorizonAir', 'scheduled', '4.5');
+VALUES ('JS331', '2023-04-30', 'California', 'Texas', '2023-04-30 07:00:00', '2023-04-30 10:00:00', '3', '310.0', '200', '200', 'JetStream', 'scheduled', '4.6');
 
--- Texas to Georgia
 INSERT INTO flight_information (flight_number, start_date, origin, destination, departure_time, arrival_time, duration, price, capacity, available_seats, airline, status, user_ratings)
-VALUES ('HA233', '2023-04-30', 'Texas', 'Georgia', '2023-04-30 06:30:00', '2023-04-30 09:15:00', '2.75', '190.0', '200', '200', 'HorizonAir', 'scheduled', '4.0');
+VALUES ('JS332', '2023-04-30', 'California', 'Texas', '2023-04-30 13:00:00', '2023-04-30 16:00:00', '3', '285.0', '200', '200', 'JetStream', 'scheduled', '4.2');
 
--- Florida to Illinois
 INSERT INTO flight_information (flight_number, start_date, origin, destination, departure_time, arrival_time, duration, price, capacity, available_seats, airline, status, user_ratings)
-VALUES ('HA234', '2023-04-30', 'Florida', 'Illinois', '2023-04-30 09:45:00', '2023-04-30 12:30:00', '2.75', '330.0', '200', '200', 'HorizonAir', 'scheduled', '4.3');
+VALUES ('JS333', '2023-04-30', 'California', 'Florida', '2023-04-30 10:30:00', '2023-04-30 18:00:00', '7.5', '490.0', '200', '200', 'JetStream', 'scheduled', '4.8');
 
--- Columbia to Colorado
 INSERT INTO flight_information (flight_number, start_date, origin, destination, departure_time, arrival_time, duration, price, capacity, available_seats, airline, status, user_ratings)
-VALUES ('HA235', '2023-04-30', 'Columbia', 'Colorado', '2023-04-30 14:00:00', '2023-04-30 16:30:00', '2.5', '410.0', '200', '200', 'HorizonAir', 'scheduled', '4.6');
+VALUES ('JS334', '2023-04-30', 'Texas', 'Georgia', '2023-04-30 11:30:00', '2023-04-30 13:30:00', '2', '125.0', '200', '200', 'JetStream', 'scheduled', '4.1');
 
--- California to New York
 INSERT INTO flight_information (flight_number, start_date, origin, destination, departure_time, arrival_time, duration, price, capacity, available_seats, airline, status, user_ratings)
-VALUES ('HA236', '2023-04-30', 'California', 'New York', '2023-04-30 17:00:00', '2023-04-30 23:30:00', '6.5', '650.0', '200', '200', 'HorizonAir', 'scheduled', '4.7');
+VALUES ('JS335', '2023-04-30', 'Texas', 'Georgia', '2023-04-30 18:30:00', '2023-04-30 20:30:00', '2', '135.0', '200', '200', 'JetStream', 'scheduled', '4.2');
+
+INSERT INTO flight_information (flight_number, start_date, origin, destination, departure_time, arrival_time, duration, price, capacity, available_seats, airline, status, user_ratings)
+VALUES ('JS336', '2023-04-30', 'Florida', 'Illinois', '2023-04-30 08:00:00', '2023-04-30 12:30:00', '4.5', '390.0', '200', '200', 'JetStream', 'scheduled', '4.5');
+
