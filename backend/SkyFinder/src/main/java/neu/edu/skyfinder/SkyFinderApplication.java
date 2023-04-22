@@ -21,9 +21,10 @@ public class SkyFinderApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 
-		userService.register("Ashwin","ashwin@a.com","username","password");
-		userService.register("Srinivasa Reddy","srini@gmail.com","srinredd","password");
-		userService.register("Test","test@gmail.com","test","password");
+		userService.register("Admin", "admin@gmail.com", "admin", "password", "ADMIN");
+		userService.register("Ashwin","ashwin@a.com","username","password", "USER");
+		userService.register("Srinivasa Reddy","srini@gmail.com","srinredd","password", "USER");
+		userService.register("Test","test@gmail.com","test","password", "USER");
 		
 	}
 

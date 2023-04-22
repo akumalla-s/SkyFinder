@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -80,6 +81,9 @@ public class SecurityConfiguration {
 		http.authorizeRequests().antMatchers("/user/createUser").permitAll();
 		http.authorizeRequests().antMatchers("/h2-admin/**").permitAll();
 		http.authorizeRequests().antMatchers("/displayFlightsBasedOnInput").permitAll();
+		
+		http.authorizeRequests().antMatchers(HttpMethod.GET, "/user/getAllusers").hasAuthority("ADMIN");
+
 		
 		http.authenticationProvider(authenticationProvider());
 		http.authorizeRequests().anyRequest().authenticated();

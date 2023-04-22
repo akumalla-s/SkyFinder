@@ -1,5 +1,7 @@
 package neu.edu.skyfinder.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +34,12 @@ public class UserController {
 		return "Hello from SkyFinder!!";
 	}
 	
+	@GetMapping("/getAllusers")
+	public ResponseEntity<List<User>> getAllUsers() {		
+		List<User> users = userService.getAllUsersByRole("USER");
+		return new ResponseEntity<>(users, HttpStatus.OK);
+	}
+	 
 	@PostMapping("/createUser")
 	public ResponseEntity<User> createUser(@RequestBody UserModel userModel) {
 		User users = userService.createUser(userModel.getName(),userModel.getEmail(),userModel.getUsername(),userModel.getPassword());

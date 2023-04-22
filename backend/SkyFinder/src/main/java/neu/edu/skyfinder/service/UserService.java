@@ -1,5 +1,6 @@
 package neu.edu.skyfinder.service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +26,7 @@ public class UserService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private FlightBookingRepository bookingRepository;
 
@@ -54,7 +55,7 @@ public class UserService implements UserDetailsService {
 
 	public User updateUserPassword(UpdateUserPasswordModel userModel, String username) {
 		Optional<User> user = userRepository.findById(username);
-		if(user.isPresent()) {
+		if (user.isPresent()) {
 			User _user = user.get();
 			_user.setPassword(new BCryptPasswordEncoder().encode(userModel.getPassword()));
 			_user = userRepository.save(_user);
@@ -90,9 +91,9 @@ public class UserService implements UserDetailsService {
 			} else {
 				deleteUser(oldusername);
 			}
-			
+
 			List<FlightBooking> flightBookings = bookingRepository.findByUsername(oldusername);
-			for(int i=0; i<flightBookings.size();i++) {
+			for (int i = 0; i < flightBookings.size(); i++) {
 				FlightBooking flightBooking = flightBookings.get(i);
 				flightBooking.setUsername(newUsername);
 				bookingRepository.save(flightBooking);
@@ -110,13 +111,32 @@ public class UserService implements UserDetailsService {
 		return user.get();
 	}
 
-	public User register(String name, String email, String username, String password) {
+	public List<User> getAllUsers() {
+		List<User> users = new ArrayList<>();
+
+		userRepository.findAll().forEach(users::add);
+		return users;
+	}
+
+	public List<User> getAllUsersByRole(String role) {
+
+		List<User> users = new ArrayList<>();
+		if (role == null) {
+			userRepository.findAll().forEach(users::add);
+
+		} else {
+			userRepository.findByRole(role).forEach(users::add);
+		}
+		return users;
+	}  
+
+	public User register(String name, String email, String username, String password, String role) {
 		User user = new User();
 		user.setName(name);
 		user.setUsername(username);
 		user.setPassword(new BCryptPasswordEncoder().encode(password));
 		user.setEmail(email);
-		user.setRole("USER");
+		user.setRole(role);
 		user = userRepository.saveAndFlush(user);
 		return user;
 
