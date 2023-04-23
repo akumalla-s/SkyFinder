@@ -3,6 +3,7 @@ package neu.edu.skyfinder.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -23,9 +24,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import neu.edu.skyfinder.controller.model.FlightBookingModel;
 import neu.edu.skyfinder.controller.model.SearchFieldsModel;
+import neu.edu.skyfinder.email.FlightBookingEmailSenderService;
+import neu.edu.skyfinder.email.FlightCancelEmailSenderService;
 import neu.edu.skyfinder.entity.FlightBooking;
 import neu.edu.skyfinder.entity.FlightInformation;
+import neu.edu.skyfinder.entity.User;
 import neu.edu.skyfinder.repository.FlightBookingRepository;
+import neu.edu.skyfinder.repository.UserRepository;
 
 @Service
 public class FlightInformationService {
@@ -38,6 +43,15 @@ public class FlightInformationService {
 
 	@Autowired
 	private FlightBookingRepository bookingRepository;
+
+	@Autowired
+	private UserRepository userRepository;
+
+	@Autowired
+	private FlightBookingEmailSenderService emailSenderService;
+
+	@Autowired
+	private FlightCancelEmailSenderService flightCancelEmailSenderService;
 
 	public List<FlightInformation> displaySkywaveFlights() throws JsonMappingException, JsonProcessingException {
 		String url = "http://localhost:8081/displayAllFlights";
@@ -132,6 +146,18 @@ public class FlightInformationService {
 			flightBooking.setStatus(flightInformation.getStatus());
 			bookingRepository.saveAndFlush(flightBooking);
 		}
+		String username = flightBookingModel.getUsername();
+
+		Optional<User> user = userRepository.findById(username);
+
+		try {
+			emailSenderService.sendEmailDetails(user, flightInformation);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FlighInformationService - bookFlight method");
+			return flightInformation;
+		}
+
 		return flightInformation;
 
 	}
@@ -142,6 +168,20 @@ public class FlightInformationService {
 	}
 
 	public boolean cancelFlightBooking(int bookingid) {
+		Optional<FlightBooking> flightBooking = bookingRepository.findById(bookingid);
+		if (flightBooking.isPresent()) {
+			FlightBooking booking = flightBooking.get();
+			Optional<User> user = userRepository.findById(booking.getUsername());
+			User user2 = user.get();
+			try {
+				flightCancelEmailSenderService.sendEmailDetails(user2, booking);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Flight Information Service - cancelFlightBooking");
+			}
+
+		}
+
 		boolean isDeleted = false;
 		try {
 			bookingRepository.deleteById(bookingid);

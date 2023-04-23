@@ -27,7 +27,7 @@ public class UserService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private RegistrationEmailSenderService emailSenderService;
 
@@ -43,8 +43,13 @@ public class UserService implements UserDetailsService {
 		user.setPassword(new BCryptPasswordEncoder().encode(password));
 		user.setRole("USER");
 		user = userRepository.saveAndFlush(user);
-		
-		emailSenderService.sendEmail(email, username, name);
+		try {
+			emailSenderService.sendEmailDetails(email, username, name);
+		} catch (Exception e) {
+			System.out.println("Couldn't send registration email - User Service - createUser method");
+			e.printStackTrace();
+			return user;
+		}
 		return user;
 
 	}
@@ -134,7 +139,7 @@ public class UserService implements UserDetailsService {
 			userRepository.findByRole(role).forEach(users::add);
 		}
 		return users;
-	}  
+	}
 
 	public User register(String name, String email, String username, String password, String role) {
 		User user = new User();
