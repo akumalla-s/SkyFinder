@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import neu.edu.jetstream.controller.FlightInformationModel;
 import neu.edu.jetstream.controller.SearchFieldsModel;
 import neu.edu.jetstream.entity.FlightInformation;
 import neu.edu.jetstream.repository.FlightInformationRepository;
@@ -48,6 +49,47 @@ public class FlightInformationService {
 		}
 		System.out.println("Error in Flight Information Service");
 		
+		return null;
+	}
+	
+	public FlightInformation createNewFlight(FlightInformationModel flightInformationModel) {
+		FlightInformation flightInformation = new FlightInformation();
+		flightInformation.setFlightNumber(flightInformationModel.getFlightNumber());
+		flightInformation.setStartDate(flightInformationModel.getStartDate());
+		flightInformation.setOrigin(flightInformationModel.getOrigin());
+		flightInformation.setDestination(flightInformationModel.getDestination());
+		flightInformation.setDepartureTime(flightInformationModel.getDepartureTime());
+		flightInformation.setArrivalTime(flightInformationModel.getArrivalTime());
+		flightInformation.setDuration(flightInformationModel.getDuration());
+		flightInformation.setPrice(flightInformationModel.getPrice());
+		flightInformation.setCapacity(flightInformationModel.getCapacity());
+		flightInformation.setAvailableSeats(flightInformationModel.getAvailableSeats());
+		flightInformation.setAirline(flightInformationModel.getAirline());
+		flightInformation.setStatus(flightInformationModel.getStatus());
+		flightInformation.setUserRatings(flightInformationModel.getUserRatings());
+		
+		repository.saveAndFlush(flightInformation);
+		return flightInformation;
+	}
+
+	public boolean deleteFlight(String flightNumber) {
+		Optional<FlightInformation> flightInformation = repository.findById(flightNumber);
+		if(flightInformation.isPresent()) {
+			repository.deleteById(flightNumber);
+			return true;
+		}
+		return false;
+	}
+
+	
+	public FlightInformation displayFlightById(String flightNumber) {
+		Optional<FlightInformation> flightInformation = repository.findById(flightNumber);
+		if(flightInformation.isPresent()) {
+			FlightInformation flight = flightInformation.get();
+			return flight;
+			
+		}
+		System.out.println("Error in Flight Information Service - displayFlightById");		
 		return null;
 	}
 
