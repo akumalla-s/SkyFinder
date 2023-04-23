@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import neu.edu.skyfinder.controller.model.UpdateUserModel;
 import neu.edu.skyfinder.controller.model.UpdateUserPasswordModel;
+import neu.edu.skyfinder.email.RegistrationEmailSenderService;
 import neu.edu.skyfinder.entity.FlightBooking;
 import neu.edu.skyfinder.entity.User;
 import neu.edu.skyfinder.repository.FlightBookingRepository;
@@ -26,6 +27,9 @@ public class UserService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private RegistrationEmailSenderService emailSenderService;
 
 	@Autowired
 	private FlightBookingRepository bookingRepository;
@@ -39,6 +43,8 @@ public class UserService implements UserDetailsService {
 		user.setPassword(new BCryptPasswordEncoder().encode(password));
 		user.setRole("USER");
 		user = userRepository.saveAndFlush(user);
+		
+		emailSenderService.sendEmail(email, username, name);
 		return user;
 
 	}
