@@ -35,7 +35,7 @@ public class FlightBookingEmailSenderService {
             			+"<body>"
             				+"<h1>Hello "+ name + "</h1>"
             				+"<p>"
-            					+ "<br/>you have successfully booked your flight"
+            					+ "<br/>You have successfully booked your flight."
             					+"<br/>"
             					+"<br/> Flight Number: "+ flightInformation.getFlightNumber()
             					+"<br/> Origin: "+ flightInformation.getOrigin()
@@ -43,7 +43,7 @@ public class FlightBookingEmailSenderService {
             					+"<br/> Departure Time: "+ flightInformation.getDepartureTime()
             					+"<br/> Arrival Time: "+ flightInformation.getArrivalTime()
             					+"<br/> Duration: "+ flightInformation.getDuration()
-            					+"<br/> Price: "+ flightInformation.getPrice()
+            					+"<br/> Price: CAD "+ flightInformation.getPrice()
             					+"<br/> Status of Flight: "+ flightInformation.getStatus()
             				+ "</p>"
             			+ "</body>"

@@ -33,9 +33,9 @@ public class FlightCancelEmailSenderService {
             			+"<body>"
             				+"<h1>Hello "+ name + "</h1>"
             				+"<p>"
-            					+ "<br/>Your have successfully cancelled your flight journey"
+            					+ "<br/>Your have successfully cancelled your flight journey."
             					+"<br/>"
-            					+ "<br/>Your refund will be credited to your bank account in 2-3 business days"
+            					+ "<br/>Your refund will be credited to your bank account in 2-3 business days."
             					+"<br/>"
             					+"<br/> Flight Number: "+ flightBooking.getFlightNumber()
             					+"<br/> Origin: "+ flightBooking.getOrigin()
@@ -43,7 +43,7 @@ public class FlightCancelEmailSenderService {
             					+"<br/> Departure Time: "+ flightBooking.getDepartureTime()
             					+"<br/> Arrival Time: "+ flightBooking.getArrivalTime()
             					+"<br/> Duration: "+ flightBooking.getDuration()
-            					+"<br/> Price: "+ flightBooking.getPrice()
+            					+"<br/> Price: CAD "+ flightBooking.getPrice()
             				+ "</p>"
             			+ "</body>"
             		+ "</html>", true);
