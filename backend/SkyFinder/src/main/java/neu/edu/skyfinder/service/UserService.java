@@ -14,8 +14,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import neu.edu.skyfinder.controller.model.CreateUserErrorResponse;
 import neu.edu.skyfinder.controller.model.UpdateUserModel;
 import neu.edu.skyfinder.controller.model.UpdateUserPasswordModel;
+import neu.edu.skyfinder.controller.model.UserModel;
 import neu.edu.skyfinder.email.RegistrationEmailSenderService;
 import neu.edu.skyfinder.entity.FlightBooking;
 import neu.edu.skyfinder.entity.User;
@@ -33,6 +35,9 @@ public class UserService implements UserDetailsService {
 
 	@Autowired
 	private FlightBookingRepository bookingRepository;
+
+	@Autowired
+	private CreateUserErrorResponse errorResponse;
 
 	public User createUser(String name, String email, String username, String password) {
 		User user = new User();
@@ -52,6 +57,44 @@ public class UserService implements UserDetailsService {
 		}
 		return user;
 
+	}
+
+	public boolean checkUser(UserModel userModel) {
+		Optional<User> user = userRepository.findById(userModel.getUsername());
+		Optional<User> user2 = userRepository.findByEmail(userModel.getEmail());
+		if (user.isPresent()) {
+			String message = "User with username " + userModel.getUsername() + " already exists";
+			errorResponse.setMessage(message);
+			return true;
+		} else if (user2.isPresent()) {
+			String message = "User with email " + userModel.getEmail() + " already exists";
+			errorResponse.setMessage(message);
+			return true;
+		}
+		return false;
+	}
+
+	public boolean checkForUserUpdate(UpdateUserModel userModel, String oldusername) {
+		Optional<User> user = userRepository.findById(userModel.getUsername());
+		Optional<User> user2 = userRepository.findByEmail(userModel.getEmail());
+
+		if (user.isPresent()) {
+			String message = "User with username " + userModel.getUsername() + " already exists";
+			errorResponse.setMessage(message);
+			return true;
+		} else if (user2.isPresent()) {
+			System.out.println("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
+			if (user.isPresent() && !user2.get().getUsername().equals(user.get().getUsername())) {
+				return false;
+			} else {
+				String message = "User with email " + userModel.getEmail() + " already exists";
+				errorResponse.setMessage(message);
+				return true;
+			}
+
+		}
+
+		return false;
 	}
 
 	public boolean deleteUser(String username) {

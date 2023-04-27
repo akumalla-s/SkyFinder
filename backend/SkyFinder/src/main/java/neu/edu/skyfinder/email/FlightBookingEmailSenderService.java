@@ -25,7 +25,7 @@ public class FlightBookingEmailSenderService {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
-            helper.setFrom("skyfinder.srinredd@gmail.com");
+            helper.setFrom("skyfinder321@gmail.com");
             helper.setTo(toEmail);
             helper.setSubject("Flight Booking Successfull - SkyFinder");
 //            helper.setText("Hello " + name + ", your account with SkyFinder has been created successfully.");

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,8 +42,14 @@ public class HomeController {
 	}
 
 	@GetMapping("/bookFlight/{flightnumber}")
-	public FlightInformation displayFlightInformation(@PathVariable String flightnumber) {
+	public FlightInformation bookFlight(@PathVariable String flightnumber) {
 		FlightInformation flightInformation = service.displayFlight(flightnumber);
+		return flightInformation;
+	}
+	
+	@PutMapping("/updateFlight/{flightnumber}")
+	public FlightInformation updateFlight(@PathVariable String flightnumber) {
+		FlightInformation flightInformation = service.updateFlight(flightnumber);
 		return flightInformation;
 	}
 	

@@ -179,6 +179,22 @@ public class FlightInformationService {
 				e.printStackTrace();
 				System.out.println("Flight Information Service - cancelFlightBooking");
 			}
+			
+			try {
+				String url = null;
+				if (booking.getFlightNumber().contains("SW")) {
+					url = "http://localhost:8081/updateFlight/" + booking.getFlightNumber();
+				} else if (booking.getFlightNumber().contains("JS")) {
+					url = "http://localhost:8082/updateFlight/" + booking.getFlightNumber();
+				} else if (booking.getFlightNumber().contains("HA")) {
+					url = "http://localhost:8083/updateFlight/" + booking.getFlightNumber();
+				}
+				restTemplate.put(url, FlightInformation.class);
+				
+			} catch (Exception e) {
+				System.out.println("Flight Information Service - cancelFlightBooking - Couldn't update count");
+			}
+			
 
 		}
 

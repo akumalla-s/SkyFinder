@@ -19,7 +19,7 @@ public class RegistrationEmailSenderService {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
-            helper.setFrom("skyfinder.srinredd@gmail.com");
+            helper.setFrom("skyfinder321@gmail.com");
             helper.setTo(toEmail);
             helper.setSubject("A new message from SkyFinder");
 //            helper.setText("Hello " + name + ", your account with SkyFinder has been created successfully.");

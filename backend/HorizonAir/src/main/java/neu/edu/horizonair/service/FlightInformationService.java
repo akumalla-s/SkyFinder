@@ -92,4 +92,18 @@ public class FlightInformationService {
 		return null;
 	}
 
+	public FlightInformation updateFlight(String flightnumber) {
+		Optional<FlightInformation> flightInformation = repository.findById(flightnumber);
+		if(flightInformation.isPresent()) {
+			FlightInformation flight = flightInformation.get();
+			Integer availableSeats = Integer.parseInt(flight.getAvailableSeats());
+			availableSeats = availableSeats + 1;
+			String updatedSeats = availableSeats.toString();
+			flight.setAvailableSeats(updatedSeats);
+			flight = repository.save(flight);
+			return flight;
+		}
+		return null;
+	}
+
 }
