@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import neu.edu.skyfinder.controller.model.CreateUserErrorResponse;
 import neu.edu.skyfinder.controller.model.UpdateUserModel;
 import neu.edu.skyfinder.controller.model.UpdateUserPasswordModel;
+import neu.edu.skyfinder.controller.model.UpdateUserResponse;
 import neu.edu.skyfinder.controller.model.UserModel;
 import neu.edu.skyfinder.entity.User;
 import neu.edu.skyfinder.service.UserService;
@@ -70,7 +71,8 @@ public class UserController {
 	@PutMapping("/updateUser/{oldusername}")
 	public ResponseEntity<?> updateUser(@RequestBody UpdateUserModel userModel, @PathVariable String oldusername) {
 		boolean isUserExists = false;
-		User user = null;
+		//User user = null;
+		UpdateUserResponse updateUserResponse = null;
 		if(userModel.getUsername().equals(oldusername)) {
 			isUserExists = false;
 		}else {
@@ -82,8 +84,8 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.OK).body(new CreateUserErrorResponse(message));
 
 		} else {
-			user = userService.updateUser(userModel, oldusername);
-			return new ResponseEntity<>(user, HttpStatus.OK);
+			updateUserResponse = userService.updateUser(userModel, oldusername);
+			return new ResponseEntity<>(updateUserResponse, HttpStatus.OK);
 		}
 
 	}

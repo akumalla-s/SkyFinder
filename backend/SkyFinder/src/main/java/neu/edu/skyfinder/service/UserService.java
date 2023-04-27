@@ -14,9 +14,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import neu.edu.skyfinder.configuration.JwtTokenUtil;
 import neu.edu.skyfinder.controller.model.CreateUserErrorResponse;
 import neu.edu.skyfinder.controller.model.UpdateUserModel;
 import neu.edu.skyfinder.controller.model.UpdateUserPasswordModel;
+import neu.edu.skyfinder.controller.model.UpdateUserResponse;
 import neu.edu.skyfinder.controller.model.UserModel;
 import neu.edu.skyfinder.email.RegistrationEmailSenderService;
 import neu.edu.skyfinder.entity.FlightBooking;
@@ -38,6 +40,9 @@ public class UserService implements UserDetailsService {
 
 	@Autowired
 	private CreateUserErrorResponse errorResponse;
+	
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
 
 	public User createUser(String name, String email, String username, String password) {
 		User user = new User();
@@ -75,27 +80,25 @@ public class UserService implements UserDetailsService {
 	}
 
 	public boolean checkForUserUpdate(UpdateUserModel userModel, String oldusername) {
-		Optional<User> user = userRepository.findById(userModel.getUsername());
-		Optional<User> user2 = userRepository.findByEmail(userModel.getEmail());
+	    Optional<User> user = userRepository.findById(userModel.getUsername());
+	    Optional<User> user2 = userRepository.findByEmail(userModel.getEmail());
 
-		if (user.isPresent()) {
-			String message = "User with username " + userModel.getUsername() + " already exists";
-			errorResponse.setMessage(message);
-			return true;
-		} else if (user2.isPresent()) {
-			System.out.println("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
-			if (user.isPresent() && !user2.get().getUsername().equals(user.get().getUsername())) {
-				return false;
-			} else {
-				String message = "User with email " + userModel.getEmail() + " already exists";
-				errorResponse.setMessage(message);
-				return true;
-			}
+	    if (user.isPresent() && !user.get().getUsername().equals(oldusername)) {
+	        String message = "User with username " + userModel.getUsername() + " already exists";
+	        errorResponse.setMessage(message);
+	        return true;
+	    } else if (user2.isPresent()) {
+	    	Optional<User> userOld = userRepository.findById(oldusername);
+	        if (!(user2.get().getEmail().equals(userOld.get().getEmail()))) {
+	            String message = "User with email " + userModel.getEmail() + " already exists";
+	            errorResponse.setMessage(message);
+	            return true;
+	        }
+	    }
 
-		}
-
-		return false;
+	    return false;
 	}
+
 
 	public boolean deleteUser(String username) {
 		Optional<User> user = userRepository.findById(username);
@@ -119,7 +122,9 @@ public class UserService implements UserDetailsService {
 		return null;
 	}
 
-	public User updateUser(UpdateUserModel userModel, String oldusername) {
+	public UpdateUserResponse updateUser(UpdateUserModel userModel, String oldusername) {
+		
+		UpdateUserResponse response = new UpdateUserResponse();
 
 		String old = oldusername;
 		String newUsername = userModel.getUsername();
@@ -134,11 +139,20 @@ public class UserService implements UserDetailsService {
 			updatedUser.setUsername(userModel.getUsername());
 			updatedUser.setName(userModel.getName());
 			updatedUser.setEmail(userModel.getEmail());
-			updatedUser.setRole("USER");
 			updatedUser.setPassword(_user.getPassword());
+			updatedUser.setRole("USER");
 
 			// Save the updated user object
 			updatedUser = userRepository.save(updatedUser);
+			
+			//Copy for response
+			final String token = jwtTokenUtil.generateToken(updatedUser.getUsername());
+			response.setUsername(updatedUser.getUsername());
+			response.setEmail(updatedUser.getEmail());
+			response.setName(updatedUser.getName());
+			response.setRole(updatedUser.getRole());
+			response.setToken(token);
+			
 
 			if (old.equals(newUsername)) {
 				System.out.println("Not deleting username");
@@ -153,7 +167,7 @@ public class UserService implements UserDetailsService {
 				bookingRepository.save(flightBooking);
 			}
 
-			return updatedUser;
+			return response;
 		}
 		System.out.println("Item is null");
 		return null;
