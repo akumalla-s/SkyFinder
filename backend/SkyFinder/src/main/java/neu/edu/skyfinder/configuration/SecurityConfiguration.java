@@ -83,6 +83,7 @@ public class SecurityConfiguration {
 		http.authorizeRequests().antMatchers("/displayFlightsBasedOnInput").permitAll();
 		
 		http.authorizeRequests().antMatchers(HttpMethod.GET, "/user/getAllusers").hasAuthority("ADMIN");
+		http.authorizeRequests().antMatchers(HttpMethod.GET, "/displayBookings").hasAuthority("ADMIN");
 
 		
 		http.authenticationProvider(authenticationProvider());

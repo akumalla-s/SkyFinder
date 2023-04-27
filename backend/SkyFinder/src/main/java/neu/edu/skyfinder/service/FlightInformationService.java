@@ -209,4 +209,9 @@ public class FlightInformationService {
 
 	}
 
+	public List<FlightBooking> displayBookings() {
+		List<FlightBooking> flightBooking = bookingRepository.findAll();
+		return flightBooking;
+	}
+
 }

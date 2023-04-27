@@ -54,6 +54,11 @@ public class HomeController {
 		return new ResponseEntity<List<FlightBooking>>(flightBooking, HttpStatus.OK);
 	}
 	
+	@GetMapping("/displayBookings")
+	public ResponseEntity<List<FlightBooking>> displayBookings() {
+		List<FlightBooking> flightBooking = service.displayBookings();
+		return new ResponseEntity<List<FlightBooking>>(flightBooking, HttpStatus.OK);
+	} 
 	@DeleteMapping("/cancelFlightBooking/{bookingid}")
 	public ResponseEntity<Boolean> cancelFlightBooking(@PathVariable int bookingid) {
 		boolean isDeleted = service.cancelFlightBooking(bookingid);
