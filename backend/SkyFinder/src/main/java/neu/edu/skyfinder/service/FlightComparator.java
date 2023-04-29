@@ -25,7 +25,7 @@ public class FlightComparator {
 			double durationScore = 1 / Double.parseDouble(flight.getDuration());
 			double userRatingScore = Double.parseDouble(flight.getUserRatings());
 			
-			double overallScore = (0.4 * priceScore) + (0.3 * durationScore) + (0.3 * userRatingScore);	        
+			double overallScore = (0.4 * priceScore) + (0.3 * durationScore) + (0.25 * userRatingScore);	        
 
 			// Round the overall score to 4 decimal places
 			overallScore = Math.round(overallScore * 10000.0) / 10000.0;

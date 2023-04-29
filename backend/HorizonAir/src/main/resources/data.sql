@@ -32,6 +32,8 @@ VALUES ('HA231', '2023-04-30', 'Illinois', 'Toronto', '2023-04-30 10:00:00', '20
 -- Toronto to Massachusetts
 INSERT INTO flight_information (flight_number, start_date, origin, destination, departure_time, arrival_time, duration, price, capacity, available_seats, airline, status, user_ratings)
 VALUES ('HA232', '2023-04-30', 'Toronto', 'Massachusetts', '2023-04-30 13:00:00', '2023-04-30 15:30:00', '2.5', '280.0', '200', '200', 'HorizonAir', 'scheduled', '4.5');
+INSERT INTO flight_information (flight_number, start_date, origin, destination, departure_time, arrival_time, duration, price, capacity, available_seats, airline, status, user_ratings)
+VALUES ('HA2321', '2023-04-30', 'Toronto', 'Massachusetts', '2023-04-30 13:00:00', '2023-04-30 15:00:00', '2', '280.0', '200', '200', 'HorizonAir', 'scheduled', '4.5');
 
 -- Texas to Georgia
 INSERT INTO flight_information (flight_number, start_date, origin, destination, departure_time, arrival_time, duration, price, capacity, available_seats, airline, status, user_ratings)
