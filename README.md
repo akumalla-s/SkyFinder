@@ -27,8 +27,8 @@ Database: H2
 
 ## To run the SkyFinder project, you can either clone it from GitHub or download a zip file.
 
-For the front-end, open the terminal or VS Code, navigate to the "frontend" folder, and run the "npm start" command.\
+For the front-end, open the terminal or VS Code, navigate to the "frontend" folder, and run the "npm start" command.
 
-For the back-end, import all the Spring Boot applications (HorizonAir, JetStream, SkyFinder, Skywave) into Eclipse or IntelliJ IDEA and run each application as a Java application.\
+For the back-end, import all the Spring Boot applications (HorizonAir, JetStream, SkyFinder, Skywave) into Eclipse or IntelliJ IDEA and run each application as a Java application.
 
 Once you have done this, you can use the project. The front-end will be accessible at "http://localhost:3000".\
