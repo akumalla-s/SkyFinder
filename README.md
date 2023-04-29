@@ -17,9 +17,9 @@
 •	Admins of the respective airplane companies can add new flight information, update flight data like status, delete flight (CRUD).\
 
 ## Technologies Used:
-Backend: Spring Boot, Spring REST, Spring JPA, Spring Security, JWT, Hibernate, 
-Frontend: React
-Database: H2
+Backend: Spring Boot, Spring REST, Spring JPA, Spring Security, JWT, Hibernate\
+Frontend: React\
+Database: H2\
 
 ## Architecture
 
