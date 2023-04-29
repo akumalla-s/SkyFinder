@@ -19,7 +19,7 @@
 ## Technologies Used:
 Backend: Spring Boot, Spring REST, Spring JPA, Spring Security, JWT, Hibernate\
 Frontend: React\
-Database: H2\
+Database: H2
 
 ## Architecture
 
