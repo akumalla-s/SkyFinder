@@ -16,37 +16,3 @@ VALUES ('HA226', '2023-04-30', 'Massachusetts', 'Toronto', '2023-04-30 13:00:00'
 
 INSERT INTO flight_information (flight_number, start_date, origin, destination, departure_time, arrival_time, duration, price, capacity, available_seats, airline, status, user_ratings)
 VALUES ('HA227', '2023-04-30', 'New York', 'Toronto', '2023-04-30 08:00:00', '2023-04-30 09:30:00', '1.5', '175.0', '200', '200', 'HorizonAir', 'scheduled', '3.8');
-
-INSERT INTO flight_information (flight_number, start_date, origin, destination, departure_time, arrival_time, duration, price, capacity, available_seats, airline, status, user_ratings)
-VALUES ('HA228', '2023-04-30', 'California', 'Toronto', '2023-04-30 12:00:00', '2023-04-30 16:30:00', '4.5', '550.0', '200', '200', 'HorizonAir', 'scheduled', '4.5');
-
-INSERT INTO flight_information (flight_number, start_date, origin, destination, departure_time, arrival_time, duration, price, capacity, available_seats, airline, status, user_ratings)
-VALUES ('HA229', '2023-04-30', 'Texas', 'Toronto', '2023-04-30 11:00:00', '2023-04-30 13:30:00', '2.5', '375.0', '200', '200', 'HorizonAir', 'scheduled', '4.3');
-
-INSERT INTO flight_information (flight_number, start_date, origin, destination, departure_time, arrival_time, duration, price, capacity, available_seats, airline, status, user_ratings)
-VALUES ('HA230', '2023-04-30', 'Florida', 'Toronto', '2023-04-30 14:00:00', '2023-04-30 18:30:00', '4.5', '480.0', '200', '200', 'HorizonAir', 'scheduled', '4.2');
-
-INSERT INTO flight_information (flight_number, start_date, origin, destination, departure_time, arrival_time, duration, price, capacity, available_seats, airline, status, user_ratings)
-VALUES ('HA231', '2023-04-30', 'Illinois', 'Toronto', '2023-04-30 10:00:00', '2023-04-30 13:30:00', '3.5', '315.0', '200', '200', 'HorizonAir', 'scheduled', '4.1');
-
--- Toronto to Massachusetts
-INSERT INTO flight_information (flight_number, start_date, origin, destination, departure_time, arrival_time, duration, price, capacity, available_seats, airline, status, user_ratings)
-VALUES ('HA232', '2023-04-30', 'Toronto', 'Massachusetts', '2023-04-30 13:00:00', '2023-04-30 15:30:00', '2.5', '280.0', '200', '200', 'HorizonAir', 'scheduled', '4.5');
-INSERT INTO flight_information (flight_number, start_date, origin, destination, departure_time, arrival_time, duration, price, capacity, available_seats, airline, status, user_ratings)
-VALUES ('HA2321', '2023-04-30', 'Toronto', 'Massachusetts', '2023-04-30 13:00:00', '2023-04-30 15:00:00', '2', '280.0', '200', '200', 'HorizonAir', 'scheduled', '4.5');
-
--- Texas to Georgia
-INSERT INTO flight_information (flight_number, start_date, origin, destination, departure_time, arrival_time, duration, price, capacity, available_seats, airline, status, user_ratings)
-VALUES ('HA233', '2023-04-30', 'Texas', 'Georgia', '2023-04-30 06:30:00', '2023-04-30 09:15:00', '2.75', '190.0', '200', '200', 'HorizonAir', 'scheduled', '4.0');
-
--- Florida to Illinois
-INSERT INTO flight_information (flight_number, start_date, origin, destination, departure_time, arrival_time, duration, price, capacity, available_seats, airline, status, user_ratings)
-VALUES ('HA234', '2023-04-30', 'Florida', 'Illinois', '2023-04-30 09:45:00', '2023-04-30 12:30:00', '2.75', '330.0', '200', '200', 'HorizonAir', 'scheduled', '4.3');
-
--- Columbia to Colorado
-INSERT INTO flight_information (flight_number, start_date, origin, destination, departure_time, arrival_time, duration, price, capacity, available_seats, airline, status, user_ratings)
-VALUES ('HA235', '2023-04-30', 'Columbia', 'Colorado', '2023-04-30 14:00:00', '2023-04-30 16:30:00', '2.5', '410.0', '200', '200', 'HorizonAir', 'scheduled', '4.6');
-
--- California to New York
-INSERT INTO flight_information (flight_number, start_date, origin, destination, departure_time, arrival_time, duration, price, capacity, available_seats, airline, status, user_ratings)
-VALUES ('HA236', '2023-04-30', 'California', 'New York', '2023-04-30 17:00:00', '2023-04-30 23:30:00', '6.5', '650.0', '200', '200', 'HorizonAir', 'scheduled', '4.7');

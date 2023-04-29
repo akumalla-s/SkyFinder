@@ -48,8 +48,8 @@ public class FlightCancelEmailSenderService {
             			+ "</body>"
             		+ "</html>", true);
             // Add image as attachment
-            FileSystemResource file = new FileSystemResource(new File("C:/Users/srini/OneDrive/Desktop/images/registration.jpg"));
-            helper.addAttachment("registration.jpg", file);
+//            FileSystemResource file = new FileSystemResource(new File("img.jpg"));
+//            helper.addAttachment("registration.jpg", file);
 
             mailSender.send(message);
             System.out.println("Flight booking email sent successfully....");

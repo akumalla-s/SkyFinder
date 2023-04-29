@@ -1,5 +1,6 @@
 package neu.edu.skyfinder.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,55 +71,51 @@ public class FlightInformationService {
 		return flightList;
 	}
 
-	public List<FlightInformation> displayFlightsBasedOnInput(SearchFieldsModel model)
-			throws JsonMappingException, JsonProcessingException {
-		String url1 = "http://localhost:8081/displayBasedOnSearch";
-		String url2 = "http://localhost:8082/displayBasedOnSearch";
-		String url3 = "http://localhost:8083/displayBasedOnSearch";
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
+	public List<FlightInformation> displayFlightsBasedOnInput(SearchFieldsModel model) throws JsonMappingException, JsonProcessingException {
+	    String url1 = "http://localhost:8081/displayBasedOnSearch";
+	    String url2 = "http://localhost:8082/displayBasedOnSearch";
+	    String url3 = "http://localhost:8083/displayBasedOnSearch";
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.setContentType(MediaType.APPLICATION_JSON);
 
-		Map<String, String> requestBody = new HashMap<>();
-		requestBody.put("origin", model.getOrigin());
-		requestBody.put("destination", model.getDestination());
-		requestBody.put("date", model.getDate());
+	    Map<String, String> requestBody = new HashMap<>();
+	    requestBody.put("origin", model.getOrigin());
+	    requestBody.put("destination", model.getDestination());
+	    requestBody.put("date", model.getDate());
 
-		HttpEntity<Map<String, String>> request = new HttpEntity<>(requestBody, headers);
+	    HttpEntity<Map<String, String>> request = new HttpEntity<>(requestBody, headers);
 
-		try {
-			// send request and retrieve response
-			ResponseEntity<List<FlightInformation>> response1 = restTemplate.exchange(url1, HttpMethod.POST, request,
-					new ParameterizedTypeReference<List<FlightInformation>>() {
-					});
-			ResponseEntity<List<FlightInformation>> response2 = restTemplate.exchange(url2, HttpMethod.POST, request,
-					new ParameterizedTypeReference<List<FlightInformation>>() {
-					});
-			ResponseEntity<List<FlightInformation>> response3 = restTemplate.exchange(url3, HttpMethod.POST, request,
-					new ParameterizedTypeReference<List<FlightInformation>>() {
-					});
-			// extract response body
-			List<FlightInformation> flightList1 = response1.getBody();
-			List<FlightInformation> flightList2 = response2.getBody();
-			List<FlightInformation> flightList3 = response3.getBody();
+	    List<FlightInformation> flightList = new ArrayList<>();
 
-			List<FlightInformation> flightList = combineMyLists(flightList1, flightList2, flightList3);
+	    try {
+	        ResponseEntity<List<FlightInformation>> response1 = restTemplate.exchange(url1, HttpMethod.POST, request,
+	                new ParameterizedTypeReference<List<FlightInformation>>() {});
+	        List<FlightInformation> flightList1 = response1.getBody();
+	        flightList.addAll(flightList1);
+	    } catch (Exception e) {
+	        System.out.println("Exception handled for url1");
+	    }
 
-			List<FlightInformation> aggregateData = flightComparator.aggregateBasedOnOverallScore(flightList);
+	    try {
+	        ResponseEntity<List<FlightInformation>> response2 = restTemplate.exchange(url2, HttpMethod.POST, request,
+	                new ParameterizedTypeReference<List<FlightInformation>>() {});
+	        List<FlightInformation> flightList2 = response2.getBody();
+	        flightList.addAll(flightList2);
+	    } catch (Exception e) {
+	        System.out.println("Exception handled for url2");
+	    }
 
-			return aggregateData;
+	    try {
+	        ResponseEntity<List<FlightInformation>> response3 = restTemplate.exchange(url3, HttpMethod.POST, request,
+	                new ParameterizedTypeReference<List<FlightInformation>>() {});
+	        List<FlightInformation> flightList3 = response3.getBody();
+	        flightList.addAll(flightList3);
+	    } catch (Exception e) {
+	        System.out.println("Exception handled for url3");
+	    }
 
-		} catch (Exception e) {
-			System.out.println("Error in Flight Information Service");
-			return null;
-		}
-
-	}
-
-	@SafeVarargs
-	private List<FlightInformation> combineMyLists(List<FlightInformation>... args) {
-		List<FlightInformation> combinedList = Stream.of(args).flatMap(i -> i.stream()).collect(Collectors.toList());
-		;
-		return combinedList;
+	    List<FlightInformation> aggregateData = flightComparator.aggregateBasedOnOverallScore(flightList);
+	    return aggregateData;
 	}
 
 	public FlightInformation bookFlight(FlightBookingModel flightBookingModel) {
@@ -179,7 +176,7 @@ public class FlightInformationService {
 				e.printStackTrace();
 				System.out.println("Flight Information Service - cancelFlightBooking");
 			}
-			
+
 			try {
 				String url = null;
 				if (booking.getFlightNumber().contains("SW")) {
@@ -190,11 +187,10 @@ public class FlightInformationService {
 					url = "http://localhost:8083/updateFlight/" + booking.getFlightNumber();
 				}
 				restTemplate.put(url, FlightInformation.class);
-				
+
 			} catch (Exception e) {
 				System.out.println("Flight Information Service - cancelFlightBooking - Couldn't update count");
 			}
-			
 
 		}
 

@@ -22,20 +22,20 @@ public class RegistrationEmailSenderService {
             helper.setFrom("skyfinder321@gmail.com");
             helper.setTo(toEmail);
             helper.setSubject("A new message from SkyFinder");
-//            helper.setText("Hello " + name + ", your account with SkyFinder has been created successfully.");
 
             helper.setText(""
-            		+ "<html>"
-            			+"<body>"
-            				+"<h1>Welcome to SkyFinder</h1>"
-            				+"<p>Hello " + name + ","
-            					+ "<br/>your account with skyfinder has been created successfully"
-            				+ "</p>"
-            			+ "</body>"
-            		+ "</html>", true);
-            // Add image as attachment
-            FileSystemResource file = new FileSystemResource(new File("C:/Users/srini/OneDrive/Desktop/images/registration.jpg"));
-            helper.addAttachment("registration.jpg", file);
+                    + "<html>"
+                        +"<body>"
+                            +"<h1>Welcome to SkyFinder</h1>"
+                            +"<p>Hello " + name + ","
+                                + "<br/>your account with skyfinder has been created successfully"
+                            + "</p>"
+                        + "</body>"
+                    + "</html>", true);
+
+//            File imageFile = new File("email/img.jpg");
+//            FileSystemResource file = new FileSystemResource(imageFile);
+//            helper.addAttachment("registration.jpg", file);
 
             mailSender.send(message);
             System.out.println("Registration mail sent successfully....");
@@ -43,6 +43,7 @@ public class RegistrationEmailSenderService {
             e.printStackTrace();
         }
     }
+
 
 	public void sendEmailDetails(String email, String username, String name) {
 		try {

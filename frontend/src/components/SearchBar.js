@@ -3,18 +3,7 @@ import "../css/SearchBar.css";
 import axios from "axios";
 import DisplayFlights from "./DisplayFlights";
 
-const cities = [
-  "Toronto",
-  "Massachusetts",
-  "New York",
-  "California",
-  "Texas",
-  "Florida",
-  "Illinois",
-  "Georgia",
-  "Colorado",
-  "Columbia",
-];
+const cities = ["Toronto", "Massachusetts", "New York"];
 
 export default function SearchBar() {
   const [fromCity, setFromCity] = useState(
