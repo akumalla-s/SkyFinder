@@ -23,7 +23,6 @@ public class SkyFinderApplication implements CommandLineRunner{
 
 		userService.register("Admin", "admin@gmail.com", "admin", "password", "ADMIN");
 		userService.register("Ashwin","ashwin@a.com","username","password", "USER");
-		userService.register("Srinivasa Reddy","akumalla.s@northeastern.edu","srinredd","password", "USER");
 		userService.register("Test","test@gmail.com","test","password", "USER");
 		
 	}
