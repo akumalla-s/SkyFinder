@@ -31,4 +31,4 @@ For the front-end, open the terminal or VS Code, navigate to the "frontend" fold
 
 For the back-end, import all the Spring Boot applications (HorizonAir, JetStream, SkyFinder, Skywave) into Eclipse or IntelliJ IDEA and run each application as a Java application.
 
-Once you have done this, you can use the project. The front-end will be accessible at "http://localhost:3000".\
+Once you have done this, you can use the project. The front-end will be accessible at "http://localhost:3000".
